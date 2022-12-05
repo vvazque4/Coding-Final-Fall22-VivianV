@@ -1,0 +1,101 @@
+import turtle
+from random import randint as rando
+import random
+turtle.clearscreen()
+turtle.setup(1000,600)
+
+#initialize empty list
+sky_xy_coords_list = []
+
+sky = turtle.Turtle()
+sky.hideturtle()
+sky.shape("turtle")
+sky.pensize(50)
+sky.speed(0)
+sky.pu()
+sky.goto(-550,-275)
+sky.pd()
+sky_xy_coords_list.append(sky.pos())
+sky.showturtle()
+
+#used photoshop to create sky gradient references
+sky_1_colors = ['A0CCEC','AAD2F0','B5D8F3','BEDEF6','C9E4F8','D0E8FA']
+sky_2_colors = ['c2b3c7','cab7c7','d2bbc7','dabfc7','e2c2c7','eac6c7']
+
+def draw_sky():
+
+    #sky_choice = random.choice(sky_options)()
+    def sky_1():
+        for i in sky_1_colors:
+            color = '#' + i
+            sky.color(color)
+            sky.fd(1100)
+            sky_xy_coords_list.append(sky.pos())
+            sky.setheading(90)
+            sky.fd(50)
+            sky_xy_coords_list.append(sky.pos())
+            sky.setheading(180)
+            sky.fd(1100)
+            sky_xy_coords_list.append(sky.pos())
+            sky.setheading(90)
+            sky.fd(50)
+            sky_xy_coords_list.append(sky.pos())
+            sky.setheading(0)
+    
+    def sky_2():
+        for i in sky_2_colors:
+            color = '#' + i
+            sky.color(color)
+            sky.fd(1100)
+            sky_xy_coords_list.append(sky.pos())
+            sky.setheading(90)
+            sky.fd(50)
+            sky_xy_coords_list.append(sky.pos())
+            sky.setheading(180)
+            sky.fd(1100)
+            sky_xy_coords_list.append(sky.pos())
+            sky.setheading(90)
+            sky.fd(50)
+            sky_xy_coords_list.append(sky.pos())
+            sky.setheading(0)
+    
+    sky_options = [sky_1,sky_2]
+    random.choice(sky_options)()
+
+    sky.hideturtle()
+
+    return sky_xy_coords_list
+
+sky_path = draw_sky()
+
+#save data in a dictionary
+draw_dict = {
+    'turtle_sky': sky_path
+}
+
+
+#save image
+from PIL import Image
+
+def save_as_png(fileName):
+  # save postscipt image 
+  turtle.getcanvas().postscript(file = fileName + '.eps') 
+  # use PIL to convert to PNG 
+  img = Image.open(fileName + '.eps')
+  img.load(scale=4)
+  img.save(fileName + '.png', 'png')
+
+save_as_png('SkyTest_4')
+
+
+#output data from dictionary
+for turtle, sky_dict in draw_dict.items():
+  print(turtle)
+  for category, data in sky_dict.items():
+    print(f'category: {category} | data: {data}')
+
+#save dictionary data as json file
+import json
+with open("SkyPath_Drawing_4.json", 'w') as json_obj:
+  json.dump(draw_dict, json_obj, indent=2)
+print('file written')

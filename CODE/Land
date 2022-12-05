@@ -1,0 +1,130 @@
+import turtle
+from random import randint as rando
+import random
+turtle.clearscreen()
+turtle.setup(1000,600)
+
+
+#initialize empty lists
+land_xy_coords_before_trail_list = []
+land_xy_coords_after_trail_list = []
+
+#initialize dictionary to receive data
+land_dict = {
+      'before_trail_xy_coords': '',
+      'land_trail_xy_coords' : '',
+      'after_trail_xy_coords': '',
+      }
+
+
+land_colors = ['#5B8C66', '#497D6E', '#6A9C6B']
+
+land = turtle.Turtle()
+land.hideturtle()
+land.shape("turtle")
+land.speed(0)
+land.color(land_colors[rando(0,2)])
+
+
+def draw_land():
+
+  land.pu()
+  land.goto(-500,rando(-140,-100))
+  land.pd()
+  land_xy_coords_before_trail_list.append(land.pos())
+  land.showturtle()
+
+  #generate "ant trail"
+  def ant_trail(turtle_obj, cycles):
+
+    '''
+    This function creates random paths for a turtle object and records the data
+    in a diction, which it returns. The function also outputs turtle data to the screen
+
+    input: turtle object, integer value for the number of cycles to create x, y data
+    output: dictionary of x,y values, position values, heading values
+    '''
+    
+    #initialize empty lists
+    x_steps_list = []
+    y_steps_list = []
+    land_trail_xy_coords_list = []
+
+    #create list of step numbers for x and y directions
+    for i in range(cycles):
+      x_step = rando(0,70)
+      y_step = rando(-1,1)
+      x_steps_list.append(x_step)
+      y_steps_list.append(y_step)
+
+
+    #iterate over step list
+    for j in range(cycles):    
+      #set random x direction
+      start_direction = rando(-15,15)
+
+      #set and test for random y direction
+      turtle_obj.setheading(start_direction)
+
+      #test to determine up or down
+      turtle_obj.fd(x_steps_list[j])
+
+      turtle_obj.setheading(y_steps_list[j])
+
+      #put data in list
+      land_trail_xy_coords_list.append(turtle_obj.pos()) #gets a tuple of x,y coordinates
+    
+
+    return land_trail_xy_coords_list  
+
+  land.begin_fill()
+  land_trail = ant_trail(land, 40)
+  land.goto(500,-300)
+  land_xy_coords_after_trail_list.append(land.pos())
+  land.goto(-500,-300)
+  land_xy_coords_after_trail_list.append(land.pos())
+  land.end_fill()
+
+  land.hideturtle()
+
+  #populate dictionary
+  land_dict['before_trail_xy_coords'] = land_xy_coords_before_trail_list
+  land_dict['land_trail_xy_coords'] = land_trail
+  land_dict['after_trail_xy_coords'] = land_xy_coords_after_trail_list
+
+  return land_dict  
+
+
+land_path = draw_land()
+
+#save data in a dictionary
+draw_dict = {
+    'turtle_land': land_path
+}
+
+
+#save image
+from PIL import Image
+
+def save_as_png(fileName):
+  # save postscipt image 
+  turtle.getcanvas().postscript(file = fileName + '.eps') 
+  # use PIL to convert to PNG 
+  img = Image.open(fileName + '.eps')
+  img.load(scale=4)
+  img.save(fileName + '.png', 'png')
+
+save_as_png('LandTest_8')
+
+
+#output data from dictionary
+for turtle, land_dict in draw_dict.items():
+  print(turtle)
+  for category, data in land_dict.items():
+    print(f'category: {category} | data: {data}')
+
+#save dictionary data as json file
+import json
+with open("LandPath_Drawing_8.json", 'w') as json_obj:
+  json.dump(draw_dict, json_obj, indent=2)
+print('file written')

@@ -1,0 +1,96 @@
+import turtle
+from random import randint as rando
+import random
+turtle.clearscreen()
+turtle.setup(1000,600)
+
+#initialize empty list
+grass_xy_coords_list = []
+
+grass = turtle.Turtle()
+grass.hideturtle()
+grass.shape("turtle")
+grass.pensize(2)
+grass.speed(0)
+
+# referenced code from https://trinket.io/python/00d2c1a8b3
+
+grass_colors = ['#52B078', '#45824C', '#69945D']
+
+def draw_grass():
+
+    blade_len_1 = rando(10,25)
+    blade_len_2 = rando(10,25)
+    blade_len_3 = rando(10,25)
+
+    grass.color(grass_colors[rando(0,2)])
+    grass.pu()
+    grass.goto(rando(-500,500),rando(-300,-160))
+    grass.pd()
+    grass_xy_coords_list.append(grass.pos())
+    grass.showturtle()
+
+    grass.setheading(130)
+    grass.begin_fill()
+    grass.fd(blade_len_1)
+    grass_xy_coords_list.append(grass.pos())
+    grass.setheading(-40)
+    grass.fd(blade_len_1*0.8)
+    grass_xy_coords_list.append(grass.pos())
+    grass.setheading(85)
+    grass.fd(blade_len_2)
+    grass_xy_coords_list.append(grass.pos())
+    grass.setheading(-85)
+    grass.fd(blade_len_2)
+    grass_xy_coords_list.append(grass.pos())
+    grass.setheading(40)
+    grass.fd(blade_len_3*0.8)
+    grass_xy_coords_list.append(grass.pos())
+    grass.setheading(-130)
+    grass.fd(blade_len_3)
+    grass_xy_coords_list.append(grass.pos())
+    
+    grass.end_fill()
+    grass.hideturtle()
+
+def draw_allgrass():
+    for i in range(rando(25,50)):
+        draw_grass()
+
+    grass.hideturtle()
+
+    return grass_xy_coords_list
+
+grass_path = draw_allgrass()
+
+#save data in a dictionary
+draw_dict = {
+    'turtle_grass': grass_path
+}
+
+
+#save image
+from PIL import Image
+
+def save_as_png(fileName):
+  # save postscipt image 
+  turtle.getcanvas().postscript(file = fileName + '.eps') 
+  # use PIL to convert to PNG 
+  img = Image.open(fileName + '.eps')
+  img.load(scale=4)
+  img.save(fileName + '.png', 'png')
+
+save_as_png('GrassTest_4')
+
+
+#output data from dictionary
+#for turtle, grass_dict in draw_dict.items():
+  #print(turtle)
+for category, data in draw_dict.items():
+    print(f'category: {category} | data: {data}')
+
+#save dictionary data as json file
+import json
+with open("GrassPath_Drawing_4.json", 'w') as json_obj:
+  json.dump(draw_dict, json_obj, indent=2)
+print('file written')

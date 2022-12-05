@@ -1,0 +1,218 @@
+import turtle
+from random import randint as rando
+import random
+turtle.clearscreen()
+turtle.setup(1000,600)
+
+#initialize empty lists
+water_xy_coords_before_trail_list = []
+water_xy_coords_after_trail_list = []
+
+#initialize dictionary to receive data
+water_dict = {
+      'before_trail_xy_coords': '',
+      'water_trail_1_xy_coords' : '',
+      'water_trail_2_xy_coords' : '',
+      'water_trail_3_xy_coords' : '',
+      'after_trail_xy_coords': '',
+      }
+
+
+water_colors = ['#79D7EE', '#3F85C5', '#2750BC']
+
+water = turtle.Turtle()
+water.hideturtle()
+water.shape("turtle")
+water.speed(0)
+water.color(water_colors[rando(0,2)])
+
+def draw_water():
+
+  water.pu()
+  water.goto(rando(-400,200), rando(-200,-150))
+  water.pd()
+  water_xy_coords_before_trail_list.append(water.pos())
+  water.showturtle()
+
+  #generate "ant trails"
+  def ant_trail_1(turtle_obj, cycles):
+
+    '''
+    This function creates random paths for a turtle object and records the data
+    in a diction, which it returns. The function also outputs turtle data to the screen
+
+    input: turtle object, integer value for the number of cycles to create x, y data
+    output: dictionary of x,y values, position values, heading values
+    '''
+    
+    #initialize empty lists
+    x_steps_list = []
+    y_steps_list = []
+    water_trail_1_xy_coords_list = []
+
+    #create list of step numbers for x and y directions
+    for i in range(cycles):
+      x_step = rando(0,50)
+      y_step = rando(-2,2)
+      x_steps_list.append(x_step)
+      y_steps_list.append(y_step)
+
+
+    #iterate over step list
+    for j in range(cycles):    
+      #set random x direction
+      start_direction = rando(-40,10)
+
+      #set and test for random y direction
+      turtle_obj.setheading(start_direction)
+
+      #test to determine up or down
+      turtle_obj.fd(x_steps_list[j])
+
+      turtle_obj.setheading(y_steps_list[j])
+
+      #put data in list
+      water_trail_1_xy_coords_list.append(turtle_obj.pos()) #gets a tuple of x,y coordinates
+
+
+    return water_trail_1_xy_coords_list
+
+  def ant_trail_2(turtle_obj, cycles):
+
+    '''
+    This function creates random paths for a turtle object and records the data
+    in a diction, which it returns. The function also outputs turtle data to the screen
+
+    input: turtle object, integer value for the number of cycles to create x, y data
+    output: dictionary of x,y values, position values, heading values
+    '''
+    
+    #initialize empty lists
+    x_steps_list = []
+    y_steps_list = []
+    water_trail_2_xy_coords_list = []
+
+    #create list of step numbers for x and y directions
+    for i in range(cycles):
+      x_step = rando(-40,0)
+      y_step = rando(-2,2)
+      x_steps_list.append(x_step)
+      y_steps_list.append(y_step)
+
+
+    #iterate over step list
+    for j in range(cycles):    
+      #set random x direction
+      start_direction = rando(-20,10)
+
+      #set and test for random y direction
+      turtle_obj.setheading(start_direction)
+
+      #test to determine up or down
+      turtle_obj.fd(x_steps_list[j])
+
+      turtle_obj.setheading(y_steps_list[j])
+
+      #put data in list
+      water_trail_2_xy_coords_list.append(turtle_obj.pos()) #gets a tuple of x,y coordinates
+    
+
+    return water_trail_2_xy_coords_list  
+
+  def ant_trail_3(turtle_obj, cycles):
+
+    '''
+    This function creates random paths for a turtle object and records the data
+    in a diction, which it returns. The function also outputs turtle data to the screen
+
+    input: turtle object, integer value for the number of cycles to create x, y data
+    output: dictionary of x,y values, position values, heading values
+    '''
+    
+    #initialize empty lists
+    x_steps_list = []
+    y_steps_list = []
+    water_trail_3_xy_coords_list = []
+
+    #create list of step numbers for x and y directions
+    for i in range(cycles):
+      x_step = rando(-25,0)
+      y_step = rando(-10,40)
+      x_steps_list.append(x_step)
+      y_steps_list.append(y_step)
+
+
+    #iterate over step list
+    for j in range(cycles):    
+      #set random x direction
+      start_direction = rando(-70,15)
+
+      #set and test for random y direction
+      turtle_obj.setheading(start_direction)
+
+      #test to determine up or down
+      turtle_obj.fd(x_steps_list[j])
+
+      turtle_obj.setheading(y_steps_list[j])
+
+      #put data in list
+      water_trail_3_xy_coords_list.append(turtle_obj.pos()) #gets a tuple of x,y coordinates
+    
+
+    return water_trail_3_xy_coords_list
+
+  water.begin_fill()
+  water_trail_1 = ant_trail_1(water, 20)
+  water.setheading(-45)
+  water.fd(7)
+  water_xy_coords_after_trail_list.append(water.pos())
+  water.setheading(180)
+  water_trail_2 = ant_trail_2(water, 20)
+  water.setheading(90)
+  water_trail_3 = ant_trail_3(water, 15)
+  water.end_fill()
+
+  water.hideturtle()
+
+  #populate dictionary
+  water_dict['before_trail_xy_coords'] = water_xy_coords_before_trail_list
+  water_dict['water_trail_1_xy_coords'] = water_trail_1
+  water_dict['water_trail_2_xy_coords'] = water_trail_2
+  water_dict['water_trail_3_xy_coords'] = water_trail_3
+  water_dict['after_trail_xy_coords'] = water_xy_coords_after_trail_list
+
+  return water_dict  
+
+water_path = draw_water()
+
+#save data in a dictionary
+draw_dict = {
+        'turtle_water': water_path
+}
+
+
+#save image
+from PIL import Image
+
+def save_as_png(fileName):
+  # save postscipt image 
+  turtle.getcanvas().postscript(file = fileName + '.eps') 
+  # use PIL to convert to PNG 
+  img = Image.open(fileName + '.eps')
+  img.load(scale=4)
+  img.save(fileName + '.png', 'png')
+
+save_as_png('WaterTest_17')
+
+
+#output data from dictionary
+for turtle, water_dict in draw_dict.items():
+  print(turtle)
+  for category, data in water_dict.items():
+    print(f'category: {category} | data: {data}')
+
+#save dictionary data as json file
+import json
+with open("WaterPath_Drawing_17.json", 'w') as json_obj:
+  json.dump(draw_dict, json_obj, indent=2)
+print('file written')

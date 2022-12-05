@@ -1,0 +1,168 @@
+import turtle
+from random import randint as rando
+turtle.clearscreen()
+turtle.setup(1000,600)
+
+
+#initialize empty lists
+bg_mts_xy_coords_list = []
+mg_mts_xy_coords_list = []
+fg_mts_xy_coords_list = []
+
+#initialize dictionary to receive data
+mts_dict = {
+      'bg_mts_xy_coords': '',
+      'mg_mts_xy_coords' : '',
+      'fg_mts_xy_coords': '',
+      }
+
+
+# mts = mountains
+mts = turtle.Turtle()
+mts.hideturtle()
+mts.shape("turtle")
+mts.speed(0)
+mts.color(('#E6E2E1'))
+
+# referenced code from https://trinket.io/python/00d2c1a8b3
+
+def draw_bg_mts():
+
+    mts.color(('#F4EDE8'))
+    mts.pu()
+    mts.goto((500),rando(100,130))
+    mts.pd()
+    bg_mts_xy_coords_list.append(mts.pos())
+    mts.showturtle()
+    mts.begin_fill()
+
+    for i in range(5):
+        mt_len = (rando(95,175))
+        mt_ang = (rando(145,160))
+
+        mts.setheading(mt_ang)
+        mts.fd(mt_len)
+        bg_mts_xy_coords_list.append(mts.pos())
+        mts.setheading(-mt_ang)
+        mts.fd(mt_len*1.2)
+        bg_mts_xy_coords_list.append(mts.pos())
+
+    mts.goto(-500,-300)
+    bg_mts_xy_coords_list.append(mts.pos())
+    mts.goto(500,-300)
+    bg_mts_xy_coords_list.append(mts.pos())
+    mts.end_fill()
+
+    mts.hideturtle()
+
+    return bg_mts_xy_coords_list  
+
+def draw_mg_mts():
+
+    mts.color(('#E1DBD5'))
+    mts.pu()
+    mts.goto((-500),rando(70,90))
+    mts.pd()
+    mg_mts_xy_coords_list.append(mts.pos())
+    mts.showturtle()
+    mts.begin_fill()
+
+    for i in range(8):
+        mt_len = (rando(50,175))
+        mt_ang = (rando(30,70))
+
+        mts.setheading(mt_ang)
+        mts.fd(mt_len)
+        mg_mts_xy_coords_list.append(mts.pos())
+        mts.setheading(-mt_ang)
+        mts.fd(mt_len*1.3)
+        mg_mts_xy_coords_list.append(mts.pos())
+
+    mts.goto(500,-300)
+    mg_mts_xy_coords_list.append(mts.pos())
+    mts.goto(-500,-300)
+    mg_mts_xy_coords_list.append(mts.pos())
+    mts.end_fill()
+
+    mts.hideturtle()
+
+    return mg_mts_xy_coords_list
+
+def draw_fg_mts():
+
+    mts.color(('#BFB1AF'))
+    mts.pu()
+    mts.goto((500),rando(15,40))
+    mts.pd()
+    fg_mts_xy_coords_list.append(mts.pos())
+    mts.showturtle()
+    mts.begin_fill()
+
+    for i in range(12):
+        mt_len = (rando(25,150))
+        mt_ang = (rando(105,140))
+
+        mts.setheading(mt_ang)
+        mts.fd(mt_len)
+        fg_mts_xy_coords_list.append(mts.pos())
+        mts.setheading(-mt_ang)
+        mts.fd(mt_len*1.2)
+        fg_mts_xy_coords_list.append(mts.pos())
+
+    mts.goto(-500,-300)
+    fg_mts_xy_coords_list.append(mts.pos())
+    mts.goto(500,-300)
+    fg_mts_xy_coords_list.append(mts.pos())
+    mts.end_fill()
+
+    mts.hideturtle()
+
+    return fg_mts_xy_coords_list  
+
+
+#populate dictionary
+mts_dict['bg_mts_xy_coords'] = bg_mts_xy_coords_list
+mts_dict['mg_mts_xy_coords'] = mg_mts_xy_coords_list
+mts_dict['fg_mts_xy_coords'] = fg_mts_xy_coords_list
+
+
+bg_mts = draw_bg_mts()
+mg_mts = draw_mg_mts()
+fg_mts = draw_fg_mts()
+
+mts_path = bg_mts + mg_mts + fg_mts
+
+print(mts_dict)
+
+
+#save data in a dictionary
+draw_dict = {
+    'turtle_mts': mts_path
+}
+
+
+#save image
+from PIL import Image
+
+def save_as_png(fileName):
+  # save postscipt image 
+  turtle.getcanvas().postscript(file = fileName + '.eps') 
+  # use PIL to convert to PNG 
+  img = Image.open(fileName + '.eps')
+  img.load(scale=4)
+  img.save(fileName + '.png', 'png')
+
+save_as_png('MtsTest_2')
+
+
+#output data from dictionary
+for turtle, mts_dict in draw_dict.items():
+  print(turtle)
+  for category, data in mts_dict.items():
+    print(f'category: {category} | data: {data}')
+
+#save dictionary data as json file
+import json
+with open("MtsPath_Drawing_2.json", 'w') as json_obj:
+  json.dump(draw_dict, json_obj, indent=2)
+print('file written')

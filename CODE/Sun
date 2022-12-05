@@ -1,0 +1,91 @@
+import turtle
+from random import randint as rando
+turtle.clearscreen()
+turtle.setup(1000,600)
+
+
+#initialize empty list
+sun_xy_coords_list = []
+
+sun = turtle.Turtle()
+sun.hideturtle()
+sun.color(('#F4E68D'))
+sun.shape("turtle")
+sun.speed(0)
+
+def draw_sun():
+  #draw a polygon
+  def draw_polygon(turtle_obj, side_number, side_length):
+    for side in range(side_number):
+      turtle_obj.fd(side_length)
+      sun_xy_coords_list.append(sun.pos())
+      turtle_obj.lt(360/side_number)
+
+  #draw a circle
+  def draw_circle(turtle_obj, radius):
+    from math import pi as pi
+    circumference = 2*pi*radius
+    sides = int(circumference/3)+3
+    length = circumference/sides
+    draw_polygon(turtle_obj, sides, length)
+
+  sun.pu()
+  sun.goto(rando(-500,300),rando(150,290))
+  sun.pd()
+  sun_xy_coords_list.append(sun.pos())
+  sun.showturtle()
+
+  sun.begin_fill()
+  draw_circle(sun, 10)
+  sun_xy_coords_list.append(sun.pos())
+  sun.end_fill()
+
+  sun.hideturtle()
+
+  return sun_xy_coords_list
+
+sun_path =  draw_sun()
+
+#save data in a dictionary
+draw_dict = {
+    'turtle_sun': sun_path
+}
+
+
+#save image
+from PIL import Image
+
+def save_as_png(fileName):
+  # save postscipt image 
+  turtle.getcanvas().postscript(file = fileName + '.eps') 
+  # use PIL to convert to PNG 
+  img = Image.open(fileName + '.eps')
+  img.load(scale=4)
+  img.save(fileName + '.png', 'png')
+
+save_as_png('SunTest_2')
+
+
+#save image
+from PIL import Image
+
+def save_as_png(fileName):
+  # save postscipt image 
+  turtle.getcanvas().postscript(file = fileName + '.eps') 
+  # use PIL to convert to PNG 
+  img = Image.open(fileName + '.eps')
+  img.load(scale=4)
+  img.save(fileName + '.png', 'png')
+
+save_as_png('SunTest_4')
+
+
+#output data from dictionary
+for category, data in draw_dict.items():
+  print(f'category: {category} | data: {data}')
+
+#save dictionary data as json file
+import json
+with open("SunPath_Drawing_4.json", 'w') as json_obj:
+  json.dump(draw_dict, json_obj, indent=2)
+print('file written')

@@ -1,0 +1,273 @@
+import turtle
+from random import randint as rando
+import random
+turtle.clearscreen()
+turtle.setup(1000,600)
+
+#initialize empty list
+trees_xy_coords_list = []
+
+trees = turtle.Turtle()
+trees.hideturtle()
+trees.shape("turtle")
+trees.speed(0)
+
+# referenced code from https://trinket.io/python/00d2c1a8b3
+
+greens = ['#4F644E', '#385949', '#2B554F', '#4A774E', '#37723D']
+browns = ['#4F3F3F', '#5D3F33', '#5F544F']
+
+def draw_tree():
+
+    def tree_leaves_1():
+        temppos = trees.pos()
+        trees.color(greens[rando(0,4)])
+        trees.pensize(2)
+
+        #bottom right
+        trees.setheading(90)
+        trees.begin_fill()
+        trees.fd(50)
+        trees_xy_coords_list.append(trees.pos())
+        trees.rt(150)
+        trees.fd(70)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(180)
+        trees.fd(35)
+        trees_xy_coords_list.append(trees.pos())
+        trees.end_fill()
+
+        #bottom left
+        trees.setheading(90)
+        trees.goto(temppos)
+        trees_xy_coords_list.append(trees.pos())
+        trees.begin_fill()
+        trees.fd(50)
+        trees_xy_coords_list.append(trees.pos())
+        trees.lt(150)
+        trees.fd(70)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(0)
+        trees.fd(35)
+        trees_xy_coords_list.append(trees.pos())
+        trees.end_fill()
+
+        #mid right
+        trees.setheading(90)
+        trees.goto(temppos)
+        trees_xy_coords_list.append(trees.pos())
+        trees.begin_fill()
+        trees.fd(70)
+        trees_xy_coords_list.append(trees.pos())
+        trees.rt(150)
+        trees.fd(60)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(180)
+        trees.fd(30)
+        trees_xy_coords_list.append(trees.pos())
+        trees.end_fill()
+
+        #mid left
+        trees.setheading(90)
+        trees.goto(temppos)
+        trees_xy_coords_list.append(trees.pos())
+        trees.begin_fill()
+        trees.fd(70)
+        trees_xy_coords_list.append(trees.pos())
+        trees.lt(150)
+        trees.fd(60)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(0)
+        trees.fd(30)
+        trees_xy_coords_list.append(trees.pos())
+        trees.end_fill()
+
+        #top right
+        trees.setheading(90)
+        trees.goto(temppos)
+        trees_xy_coords_list.append(trees.pos())
+        trees.begin_fill()
+        trees.fd(90)
+        trees_xy_coords_list.append(trees.pos())
+        trees.rt(150)
+        trees.fd(50)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(180)
+        trees.fd(25)
+        trees_xy_coords_list.append(trees.pos())
+        trees.end_fill()
+
+        #top left
+        trees.setheading(90)
+        trees.goto(temppos)
+        trees_xy_coords_list.append(trees.pos())
+        trees.begin_fill()
+        trees.fd(90)
+        trees_xy_coords_list.append(trees.pos())
+        trees.lt(150)
+        trees.fd(50)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(0)
+        trees.fd(25)
+        trees_xy_coords_list.append(trees.pos())
+        trees.end_fill()
+
+    def tree_leaves_2():
+        temppos = trees.pos()
+        trees.color(greens[rando(0,4)])
+        trees.pensize(2)
+
+        #bottom right
+        trees.setheading(90)
+        trees.begin_fill()
+        trees.fd(50)
+        trees_xy_coords_list.append(trees.pos())
+        trees.rt(165)
+        trees.fd(70)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(180)
+        trees.fd(20)
+        trees_xy_coords_list.append(trees.pos())
+        trees.end_fill()
+
+        #bottom left
+        trees.setheading(90)
+        trees.goto(temppos)
+        trees_xy_coords_list.append(trees.pos())
+        trees.begin_fill()
+        trees.fd(50)
+        trees_xy_coords_list.append(trees.pos())
+        trees.lt(165)
+        trees.fd(70)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(0)
+        trees.fd(20)
+        trees_xy_coords_list.append(trees.pos())
+        trees.end_fill()
+
+        #mid right
+        trees.setheading(90)
+        trees.goto(temppos)
+        trees_xy_coords_list.append(trees.pos())
+        trees.begin_fill()
+        trees.fd(70)
+        trees_xy_coords_list.append(trees.pos())
+        trees.rt(165)
+        trees.fd(60)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(180)
+        trees.fd(15)
+        trees_xy_coords_list.append(trees.pos())
+        trees.end_fill()
+
+        #mid left
+        trees.setheading(90)
+        trees.goto(temppos)
+        trees_xy_coords_list.append(trees.pos())
+        trees.begin_fill()
+        trees.fd(70)
+        trees_xy_coords_list.append(trees.pos())
+        trees.lt(165)
+        trees.fd(60)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(0)
+        trees.fd(15)
+        trees_xy_coords_list.append(trees.pos())
+        trees.end_fill()
+
+    def tree_leaves_3():
+        temppos = trees.pos()
+        trees.color(greens[rando(0,4)])
+        trees.pensize(5)
+
+        #diamond shape
+        trees.setheading(60)
+        trees.begin_fill()
+        trees.fd(50)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(120)
+        trees.fd(50)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(240)
+        trees.fd(50)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(300)
+        trees.fd(50)
+        trees_xy_coords_list.append(trees.pos())
+        trees.end_fill()
+
+        trees.setheading(90)
+        trees.begin_fill()
+        trees.fd(25)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(60)
+        trees.fd(45)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(120)
+        trees.fd(45)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(240)
+        trees.fd(45)
+        trees_xy_coords_list.append(trees.pos())
+        trees.setheading(300)
+        trees.fd(45)
+        trees_xy_coords_list.append(trees.pos())
+        trees.end_fill()
+
+    #tree trunks
+    trees.color(browns[rando(0,2)])
+    trees.pensize(rando(5,10))
+    trees.pu()
+    trees.goto(rando(-500,500),rando(-300,-160))
+    trees.pd()
+    trees_xy_coords_list.append(trees.pos())
+    trees.showturtle()
+    trees.setheading(90)
+    trees.fd(rando(20,50))
+    trees_xy_coords_list.append(trees.pos())
+
+    tree_leaves = [tree_leaves_1, tree_leaves_2, tree_leaves_3]
+    random.choice(tree_leaves)()
+
+
+def draw_alltrees():
+    for i in range(rando(25,40)):
+        draw_tree()
+
+    trees.hideturtle()
+
+    return trees_xy_coords_list
+
+trees_path = draw_alltrees()
+
+#save data in a dictionary
+draw_dict = {
+    'turtle_trees': trees_path
+}
+
+
+#save image
+from PIL import Image
+
+def save_as_png(fileName):
+  # save postscipt image 
+  turtle.getcanvas().postscript(file = fileName + '.eps') 
+  # use PIL to convert to PNG 
+  img = Image.open(fileName + '.eps')
+  img.load(scale=4)
+  img.save(fileName + '.png', 'png')
+
+save_as_png('TreesTest_2')
+
+
+#output data from dictionary
+for turtle, trees_dict in draw_dict.items():
+  print(turtle)
+  for category, data in trees_dict.items():
+    print(f'category: {category} | data: {data}')
+
+#save dictionary data as json file
+import json
+with open("TreesPath_Drawing_2.json", 'w') as json_obj:
+  json.dump(draw_dict, json_obj, indent=2)
+print('file written')

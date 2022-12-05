@@ -1,0 +1,84 @@
+import turtle
+from random import randint as rando
+import random
+turtle.clearscreen()
+turtle.setup(1000,600)
+
+#initialize empty list
+clouds_xy_coords_list = []
+
+clouds = turtle.Turtle()
+clouds.hideturtle()
+clouds.color(('#E6F2F5'))
+clouds.shape("turtle")
+clouds.speed(0)
+
+greys = ['#EBF2F4', '#DFE4E7', '#F8FBFB']
+
+def draw_cloud():
+
+    clouds.color(greys[rando(0,2)])
+    clouds.pu()
+    clouds.goto(rando(-510, 510),rando(90,250))
+    clouds.pd()
+    clouds_xy_coords_list.append(clouds.pos())
+    clouds.showturtle()
+
+
+    for i in range(rando(15,25)):
+        cloud_brush = rando(30,75)
+        cloud_len = rando(-50,55)
+
+        clouds.pensize(cloud_brush)
+        clouds.setheading(0)
+        clouds.fd(cloud_len)
+        clouds_xy_coords_list.append(clouds.pos())
+        clouds.setheading(90)
+        clouds.fd(3)
+        clouds_xy_coords_list.append(clouds.pos())
+
+    clouds.setheading(0)
+    clouds.fd(cloud_len)
+    clouds_xy_coords_list.append(clouds.pos())
+
+def draw_allclouds():
+    for i in range(rando(2,3)):
+        draw_cloud()
+
+    clouds.hideturtle()
+
+    return clouds_xy_coords_list
+
+clouds_path = draw_allclouds()
+
+#save data in a dictionary
+draw_dict = {
+    'turtle_clouds': clouds_path
+}
+
+
+#save image
+from PIL import Image
+
+def save_as_png(fileName):
+  # save postscipt image 
+  turtle.getcanvas().postscript(file = fileName + '.eps') 
+  # use PIL to convert to PNG 
+  img = Image.open(fileName + '.eps')
+  img.load(scale=4)
+  img.save(fileName + '.png', 'png')
+
+save_as_png('CloudsTest_2')
+
+
+#output data from dictionary
+for turtle, clouds_dict in draw_dict.items():
+  print(turtle)
+  for category, data in clouds_dict.items():
+    print(f'category: {category} | data: {data}')
+
+#save dictionary data as json file
+import json
+with open("CloudsPath_Drawing_2.json", 'w') as json_obj:
+  json.dump(draw_dict, json_obj, indent=2)
+print('file written')

@@ -1,0 +1,45 @@
+The functions I created were to draw every individual element found in every landscape drawing
+(sky, sun, clouds, mountains, land, water, grass, trees). These functions may also include inner
+functions for those elements that have multiple options either color-wise, such as with the sky, or
+as in the case of the mountains, have multiple sets of paths being drawn with a single turtle.
+These inner and outer functions contain turtle movements and coordinates being appended to
+lists that eventually compile into the final ‘draw_dict’ dictionary that contains all the coordinates
+from all the turtles making up the drawing.
+
+I essentially began with what I knew and went from there, beginning with the land turtle utilizing
+the ant trails we were introduced to during our lesson on turtle. I manipulated the code within it
+to make the turtle work within a certain limit of movement and direction, which took a long time
+to figure out what every line of code meant, since we hadn’t talked about much of it, but as I
+came back to that turtle after beginning on other elements in the drawing, I started to understand
+it better and it eventually became almost easy to handle.
+
+I was stuck for a while when I didn’t understand how much I could randomize movements with
+turtle, but this site I stumbled upon, (https://trinket.io/python/00d2c1a8b3), ended up helping me
+the most in figuring out the gist of creating multiple complex items in a drawing, and I heavily
+referenced this code while working, though of course I made my own adjustments to add more
+detail and randomization, as well as add the coordinate data. I also made well use of
+https://htmlcolorcodes.com/color-picker/ and Photoshop to play with hex codes for the
+colors/gradients I used. Also, after last class when we discussed our reading, someone mentioned
+using VSCode over Google Colab as their coding platform because turtle ran much faster that
+way, and I decided to try it out, and it worked wonders in comparison. That was a bit of a
+learning curve getting into it and I had to reference the Get Started/User Guide on the VSCode
+site (https://code.visualstudio.com/docs/editor/codebasics) a lot when getting started on it, but
+after a while I got so used to it and writing code slightly different than with Colab. The Python
+Turtle documentation (https://docs.python.org/3/library/turtle.html) helped immensely as well
+when figuring out turtle functions while doing this project.
+
+A big issue I faced as well after finishing up the main code, was exporting it as a PNG image
+which took many hours, but eventually I figured out how to download Pillow and Ghostscript
+and export an EPS and PNG file utilizing code from Andy Richter under this thread:
+https://stackoverflow.com/questions/9886274/how-can-i-convert-canvas-content-to-an-image.
+I figured out how to save the x & y coordinates for all the parts of the drawing based on the ant
+trails code from class, and applied those principles in creating lists of coordinate data for every element.
+
+If I worked on this further, I’d try to figure out if there was a way to ensure the trees, grass, and
+water elements could randomly generate within a fill region (such as the land), and figure out
+how to make the trees not overlap each other so much in a way that makes trees “further back”
+sit on top of trees “up close”. It would also be nice to achieve more detail on the tree leaves and,
+maybe, I could figure out how to make the clouds feel more realistic. It would be cool to add
+shading for every element if I could somehow use the generated code to go back in and add more
+details as an additional function, but that might not be possible with the limits of the Python
+Turtle, or at least without creating really complicated code within it.

@@ -1,0 +1,35 @@
+{
+  "turtle_water": {
+    "before_trail_xy_coords": [
+      [
+        67,
+        -178
+      ]
+    ],
+    "watertrail_full_dict": [
+      [
+        [
+          "full_steps",
+          "full_steps",
+          "full_steps"
+        ],
+        [
+          "x_y_coords",
+          "x_y_coords",
+          "x_y_coords"
+        ],
+        [
+          "direction",
+          "direction",
+          "direction"
+        ]
+      ]
+    ],
+    "after_trail_xy_coords": [
+      [
+        531.2559287830896,
+        -284.1284162366024
+      ]
+    ]
+  }
+}
